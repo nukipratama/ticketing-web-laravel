@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages/landing');
 });
+//tickets
+Route::get('ticket', 'TicketController@index');
+Route::post('ticket', 'TicketController@create');
+Route::post('ticket/confirm', 'TicketController@confirm');
