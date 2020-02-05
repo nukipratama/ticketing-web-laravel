@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ticket;
+use App\Book;
 use Illuminate\Support\Str;
 
 class TicketController extends Controller
@@ -47,8 +48,18 @@ class TicketController extends Controller
     public function confirm(Request $request)
     {
         $bid = Str::random(10);
-        echo $ticket = $request->session()->pull('ticket', 'default');
-        for ($i = 0; $i < count($request->namePeserta); $i++) {
+        $ticket = $request->session()->pull('ticket', 'default');
+        $jumlah = count($request->namePeserta);
+        Book::create([
+            'bid' => $bid,
+            'jenis' => $ticket->jenis,
+            'kategori' => $ticket->kategori,
+            'harga' => $ticket->harga,
+            'jumlah' => $jumlah,
+            'email' => $request->emailPemesan
+        ]);
+
+        for ($i = 0; $i < $jumlah; $i++) {
             $uid = Str::random(10);
             $file = $request->file('imgPeserta')[$i];
             $file_mod_name = $uid . '.' . $file->getClientOriginalExtension();
@@ -71,7 +82,6 @@ class TicketController extends Controller
             ];
         }
         $request->session()->put('peserta', $peserta);
-        $request->session()->keep(['ticket', 'peserta']);
         return view('pages/pendaftaran/confirm', compact('peserta'));
     }
     /**

@@ -21,7 +21,7 @@ class CreateBooksTable extends Migration
             $table->integer('harga');
             $table->integer('jumlah');
             $table->string('email');
-            $table->string('invoice');
+            $table->string('invoice')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });
