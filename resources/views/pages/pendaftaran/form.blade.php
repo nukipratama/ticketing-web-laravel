@@ -8,7 +8,7 @@
   <p class="row">Total Harga : {{$jumlah*$ticket->harga}}</p>
 </div>
 <div class="container">
-  <form action="/ticket/confirm" method="POST">
+  <form action="/ticket/confirm" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="form-row">
       <div class="form-group col-md-6">

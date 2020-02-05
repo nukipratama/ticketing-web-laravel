@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ticket;
+use Illuminate\Support\Str;
 
 class TicketController extends Controller
 {
@@ -28,6 +29,7 @@ class TicketController extends Controller
         $ticket = Ticket::where('id', $request->id)->first();
         if ($ticket) {
             if ($ticket->kuota >= $request->jumlah) {
+                $request->session()->put('ticket', $ticket);
                 return view(
                     'pages/pendaftaran/form',
                     [
@@ -44,9 +46,17 @@ class TicketController extends Controller
     }
     public function confirm(Request $request)
     {
+        $bid = Str::random(10);
+        echo $ticket = $request->session()->pull('ticket', 'default');
         for ($i = 0; $i < count($request->namePeserta); $i++) {
-            $peserta[$i] = [
-                "name" =>  $request->namePeserta[$i],
+            $uid = Str::random(10);
+            $file = $request->file('imgPeserta')[$i];
+            $file_mod_name = $uid . '.' . $file->getClientOriginalExtension();
+            $file->move('image/temp', $file_mod_name);
+            $peserta[$i] = (object) [
+                "uid" => $uid,
+                "bid" => $bid,
+                "name" => $request->namePeserta[$i],
                 "email" => $request->emailPeserta[$i],
                 "address" => $request->addressPeserta[$i],
                 "tel" => $request->telPeserta[$i],
@@ -56,13 +66,13 @@ class TicketController extends Controller
                 "id" => $request->idPeserta[$i],
                 "community" => $request->communityPeserta[$i],
                 "size" => $request->sizePeserta[$i],
-                "img" => $request->imgPeserta[$i],
+                "img" => 'image/temp/' . $file_mod_name,
                 "medical" => $request->medicalPeserta[$i]
             ];
         }
-        foreach ($peserta as $item) {
-            var_dump($item);
-        }
+        $request->session()->put('peserta', $peserta);
+        $request->session()->keep(['ticket', 'peserta']);
+        return view('pages/pendaftaran/confirm', compact('peserta'));
     }
     /**
      * Store a newly created resource in storage.
