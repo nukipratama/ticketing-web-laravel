@@ -5,26 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Ticket;
 use App\Book;
+use App\Participant;
 use Illuminate\Support\Str;
 
 class TicketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $tickets = Ticket::all();
         return view('pages/pendaftaran/index', compact('tickets'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
         $ticket = Ticket::where('id', $request->id)->first();
@@ -45,20 +36,27 @@ class TicketController extends Controller
             return abort(404);
         }
     }
-    public function confirm(Request $request)
+
+    public function check(Request $request)
     {
+        //validate forms
+
+        // generate bid, retrieve ticket detail,count peserta
         $bid = Str::random(10);
         $ticket = $request->session()->pull('ticket', 'default');
         $jumlah = count($request->namePeserta);
-        Book::create([
+
+        //create book object, insert into 'books' table
+        $book = (object) [
             'bid' => $bid,
             'jenis' => $ticket->jenis,
             'kategori' => $ticket->kategori,
             'harga' => $ticket->harga,
             'jumlah' => $jumlah,
             'email' => $request->emailPemesan
-        ]);
+        ];
 
+        //generate uid for peserta, retrieve and store file, wrap input into object
         for ($i = 0; $i < $jumlah; $i++) {
             $uid = Str::random(10);
             $file = $request->file('imgPeserta')[$i];
@@ -74,24 +72,26 @@ class TicketController extends Controller
                 "emergency" => $request->emergencyPeserta[$i],
                 "gender" => $request->genderPeserta[$i],
                 "birthdate" => $request->birthdatePeserta[$i],
-                "id" => $request->idPeserta[$i],
+                "identity" => $request->idPeserta[$i],
                 "community" => $request->communityPeserta[$i],
                 "size" => $request->sizePeserta[$i],
                 "img" => 'image/temp/' . $file_mod_name,
                 "medical" => $request->medicalPeserta[$i]
             ];
         }
-        $request->session()->put('peserta', $peserta);
-        return view('pages/pendaftaran/confirm', compact('peserta'));
+        // send to store method
+        return $this->insert($book, $peserta);
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function insert($book, $peserta)
     {
-        //
+        Book::create(get_object_vars($book));
+        foreach ($peserta as $participant) {
+            Participant::create(get_object_vars($participant));
+        }
+        return view('pages/pendaftaran/success', [
+            'book' => $book,
+            'peserta' => $peserta
+        ]);
     }
 }

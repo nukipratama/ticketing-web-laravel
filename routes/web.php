@@ -11,10 +11,12 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('pages/landing');
 });
 //tickets
 Route::get('ticket', 'TicketController@index');
 Route::post('ticket', 'TicketController@create');
-Route::post('ticket/confirm', 'TicketController@confirm');
+Route::post('ticket/check', 'TicketController@check');
+// Route::get('ticket/insert', 'TicketController@insert');
