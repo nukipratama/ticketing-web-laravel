@@ -17,6 +17,5 @@ Route::get('/', function () {
 });
 //tickets
 Route::get('ticket', 'TicketController@index');
-Route::post('ticket', 'TicketController@create');
 Route::post('ticket/check', 'TicketController@check');
-// Route::get('ticket/insert', 'TicketController@insert');
+Route::get('ticket/{id}', 'TicketController@create');
