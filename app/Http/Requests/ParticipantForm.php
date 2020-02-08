@@ -24,18 +24,20 @@ class ParticipantForm extends FormRequest
     public function rules()
     {
         $rules = [
-            'emailPemesan' => 'required|email',
-            'namePeserta.*' => 'required',
-            'emailPeserta.*' => 'required|email',
-            'addressPeserta.*' => 'required',
-            'telPeserta.*' => 'required|min:8',
-            'emergencyPeserta.*' => 'required|min:8',
-            'genderPeserta.*' => 'required|max:1|different:null',
-            'birthdatePeserta.*' => 'required',
-            'idPeserta.*' => 'required',
-            'sizePeserta.*' => 'required|max:1|different:null',
-            'imgPeserta.*' => 'required|image|mimes:jpeg,png,jpg,bmp|max:4096'
+            // 'emailPemesan' => 'required|email:rfc',
+            // 'namePeserta.*' => 'required',
+            // 'emailPeserta.*' => 'required|email:rfc',
+            // 'addressPeserta.*' => 'required',
+            // 'telPeserta.*' => 'required|min:8',
+            // 'emergencyPeserta.*' => 'required|min:8',
+            // 'genderPeserta.*' => 'required',
+            // 'birthdatePeserta.*' => 'required',
+            // 'idPeserta.*' => 'required',
+            // 'sizePeserta.*' => 'required',
+            'imgPeserta' => 'required',
+            'imgPeserta.*' => 'image|max:2048'
         ];
+        // dd($this->request->idPeserta);
         return $rules;
     }
 

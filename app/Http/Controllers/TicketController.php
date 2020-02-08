@@ -37,6 +37,7 @@ class TicketController extends Controller
 
    public function check(ParticipantForm $request)
    {
+      dd($request->imgPeserta);
       //validate forms
       $validated = $request->validated();
 
