@@ -1,5 +1,5 @@
 @extends('base/base')
 @section('content')
-{{var_dump($book)}}
-{{var_dump($peserta)}}
+{{dd($book)}}
+{{dd($peserta)}}
 @endsection

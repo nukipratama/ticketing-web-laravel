@@ -37,13 +37,12 @@ class TicketController extends Controller
 
    public function check(ParticipantForm $request)
    {
-      dd($request->imgPeserta);
       //validate forms
-      $validated = $request->validated();
+      $validated = (object) $request->validated();
 
       // retrieve ticket detail, add emailPemesan
       $book = $request->session()->pull('book', 'default');
-      $book->email = $request->emailPemesan;
+      $book->email = $validated->emailPemesan;
 
       //generate uid for peserta, retrieve and store file, wrap input into object
       for ($i = 0; $i < $book->jumlah; $i++) {
@@ -54,18 +53,18 @@ class TicketController extends Controller
          $peserta[$i] = (object) [
             "uid" => $uid,
             "bid" => $book->bid,
-            "name" => $request->namePeserta[$i],
-            "email" => $request->emailPeserta[$i],
-            "address" => $request->addressPeserta[$i],
-            "tel" => $request->telPeserta[$i],
-            "emergency" => $request->emergencyPeserta[$i],
-            "gender" => $request->genderPeserta[$i],
-            "birthdate" => $request->birthdatePeserta[$i],
-            "identity" => $request->idPeserta[$i],
-            "community" => $request->communityPeserta[$i],
-            "size" => $request->sizePeserta[$i],
+            "name" => $validated->namePeserta[$i],
+            "email" => $validated->emailPeserta[$i],
+            "address" => $validated->addressPeserta[$i],
+            "tel" => $validated->telPeserta[$i],
+            "emergency" => $validated->emergencyPeserta[$i],
+            "gender" => $validated->genderPeserta[$i],
+            "birthdate" => $validated->birthdatePeserta[$i],
+            "identity" => $validated->idPeserta[$i],
+            "community" => $validated->communityPeserta[$i],
+            "size" => $validated->sizePeserta[$i],
             "img" => 'image/temp/' . $file_mod_name,
-            "medical" => $request->medicalPeserta[$i]
+            "medical" => $validated->medicalPeserta[$i]
          ];
       }
       // send to store method

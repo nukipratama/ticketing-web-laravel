@@ -6,9 +6,6 @@
    <p class="row">Kategori : {{$book->kategori}}</p>
    <p class="row">Jumlah : {{$book->jumlah}}</p>
    <p class="row">Total Harga : {{$book->jumlah*$book->harga}}</p>
-   @foreach ($errors->all() as $error)
-   <li>{{ $error }}</li>
-   @endforeach
 </div>
 <div class="container">
    <form action="/ticket/check" method="POST" enctype="multipart/form-data">
@@ -16,7 +13,7 @@
       <div class="form-row">
          <div class="form-group col-md-6">
             <label for="emailPemesan">Alamat Email Pemesan</label>
-            <input type="text" name="emailPemesan" id="emailPemesan"
+            <input type="email" name="emailPemesan" id="emailPemesan"
                class="form-control  @if($errors->any()) {{ $errors->has('emailPemesan') ? 'is-invalid' :  'is-valid'}} @endif"
                value="{{old('emailPemesan')}}">
             @error('emailPemesan')

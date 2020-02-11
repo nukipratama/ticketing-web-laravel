@@ -11,6 +11,17 @@
 |
 */
 
+use App\Mail\BookSuccessMail;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/send-mail', function () {
+    $details = new stdClass;
+    $details->name = 'NUki';
+    $details->desc = 'hello world';
+    Mail::to('newuser@example.com')->send(new BookSuccessMail($details));
+
+    return 'A message has been sent to Mailtrap!';
+});
 
 Route::get('/', function () {
     return view('pages/landing');
