@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class BookSuccessMail extends Mailable
+class BookTimeNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $book;
@@ -29,7 +29,7 @@ class BookSuccessMail extends Mailable
     public function build()
     {
         return $this->from('ticketapp@nukipratama.tech', 'TicketApp')
-            ->subject('TicketApp Payment Confirmation - OrderID: ' . $this->book->bid)
-            ->markdown('mail.book.invoice');
+            ->subject('TicketApp Payment Reminder - OrderID: ' . $this->book->bid)
+            ->markdown('mail.book.invoiceTimeNotification');
     }
 }

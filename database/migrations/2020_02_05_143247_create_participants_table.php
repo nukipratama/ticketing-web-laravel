@@ -25,10 +25,10 @@ class CreateParticipantsTable extends Migration
             $table->string('gender');
             $table->timestamp('birthdate');
             $table->string('identity');
-            $table->string('community');
-            $table->char('size', 1);
+            $table->string('community')->nullable();
+            $table->char('size', 2);
             $table->string('img');
-            $table->string('medical');
+            $table->string('medical')->nullable();
             $table->timestamps();
         });
     }

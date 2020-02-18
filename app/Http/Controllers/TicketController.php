@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 use App\Ticket;
 use App\Book;
 use App\Http\Requests\ParticipantForm;
+use App\Jobs\SendBookExpiredMail;
+use App\Jobs\SendBookSuccessMail;
+use App\Jobs\SendBookTimeNotificationMail;
 use App\Participant;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class TicketController extends Controller
 {
@@ -73,10 +78,17 @@ class TicketController extends Controller
 
    public function store($book, $peserta)
    {
+      $book->deadline = Carbon::parse(now()->addDay(), 'Asia/Jakarta');
       Book::create(get_object_vars($book));
       foreach ($peserta as $participant) {
          Participant::create(get_object_vars($participant));
       }
+
+      Log::info('Menambahkan notifikasi tagihan ' . $book->email . ' ke antrian..');
+      SendBookSuccessMail::dispatch($book)->onQueue('high');
+      SendBookTimeNotificationMail::dispatch($book)->onQueue('medium')->delay(now()->addMinutes(2));
+      SendBookExpiredMail::dispatch($book)->onQueue('medium')->delay(now()->addMinutes(4));
+
       return view('pages/pendaftaran/success', [
          'book' => $book,
          'peserta' => $peserta

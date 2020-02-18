@@ -8,7 +8,7 @@
    <p class="row">Total Harga : {{$book->jumlah*$book->harga}}</p>
 </div>
 <div class="container">
-   <form action="/ticket/check" method="POST" enctype="multipart/form-data">
+   <form action="{{url('/ticket/check')}}" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="form-row">
          <div class="form-group col-md-6">
