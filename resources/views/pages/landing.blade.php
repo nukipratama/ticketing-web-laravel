@@ -6,6 +6,7 @@
   </div>
   <div class="row justify-content-center">
     <p class=" lead">github.com/nukipratama</p>
+    {{{now()}}}
   </div>
 
 </div>
