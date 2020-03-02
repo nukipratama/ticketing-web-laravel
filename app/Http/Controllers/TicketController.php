@@ -19,7 +19,7 @@ class TicketController extends Controller
    public function index()
    {
       $tickets = Ticket::all();
-      return view('pages/pendaftaran/index', compact('tickets'));
+      return view('pages/ticket/index', compact('tickets'));
    }
 
    public function create(Request $request)
@@ -31,7 +31,7 @@ class TicketController extends Controller
             $book->bid = Str::random(10);
             $book->jumlah = $request->jumlah;
             $request->session()->put('book', $book);
-            return view('pages/pendaftaran/form', ['book' => $book]);
+            return view('pages/ticket/form', ['book' => $book]);
          } else {
             return redirect('/ticket');
          }
@@ -54,7 +54,7 @@ class TicketController extends Controller
          $uid = Str::random(10);
          $file = $request->file('imgPeserta')[$i];
          $file_mod_name = $uid . '.' . $file->getClientOriginalExtension();
-         $file->move('image/temp', $file_mod_name);
+         $file->move('image/upload', $file_mod_name);
          $peserta[$i] = (object) [
             "uid" => $uid,
             "bid" => $book->bid,
@@ -86,10 +86,10 @@ class TicketController extends Controller
 
       Log::info('Menambahkan notifikasi tagihan ' . $book->email . ' ke antrian..');
       SendBookSuccessMail::dispatch($book)->onQueue('high');
-      SendBookTimeNotificationMail::dispatch($book)->onQueue('medium')->delay(now()->addMinutes(2));
-      SendBookExpiredMail::dispatch($book)->onQueue('medium')->delay(now()->addMinutes(4));
+      SendBookTimeNotificationMail::dispatch($book)->onQueue('medium')->delay(now()->addHours(12));
+      SendBookExpiredMail::dispatch($book)->onQueue('medium')->delay(now()->addDay());
 
-      return view('pages/pendaftaran/success', [
+      return view('pages/ticket/success', [
          'book' => $book,
          'peserta' => $peserta
       ]);
