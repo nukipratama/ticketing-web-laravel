@@ -25,6 +25,8 @@
     <!-- Custom styles for this template -->
     <link href="{{asset("template/css/main.css")}}" rel="stylesheet">
     @yield('custom-css')
+
+
 </head>
 
 <body>
@@ -211,6 +213,7 @@
     <!-- Custom js -->
     <script src="{{asset("template/js/main.js")}}"></script>
     @yield('custom-js')
+
 </body>
 
 </html>

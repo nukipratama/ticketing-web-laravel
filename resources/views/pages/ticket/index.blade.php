@@ -1,7 +1,7 @@
 @extends('template/base')
 @section('content')
 <!--page title section-->
-<section class="inner_cover parallax-window" data-parallax="scroll" data-image-src="template/img/IMG_9740.JPG">
+<section class="inner_cover parallax-window" data-parallax="scroll" data-image-src="template/img/IMG_9740.jpg">
   <div class="overlay_dark"></div>
   <div class="container">
     <div class="row justify-content-center align-items-center">
@@ -24,13 +24,11 @@
 </section>
 <!--page title section end-->
 
-<div class="container-fluid">
-  <div class="row justify-content-center">
-    <h1>Ticket<b>List</b></h1>
-  </div>
+<div class="container my-3">
   <div class="row justify-content-center">
 
     @foreach ($tickets as $item)
+
     <div class="col-md-4">
       <div class="card">
         <div class="card-body">
@@ -45,8 +43,9 @@
         </div>
       </div>
     </div>
-    @endforeach
 
+    @endforeach
   </div>
+
 </div>
 @endsection

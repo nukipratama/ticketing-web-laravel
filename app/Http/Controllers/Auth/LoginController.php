@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Auth\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -20,7 +21,10 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-
+    public function showLoginForm()
+    {
+        return view('dashboard.auth.login');
+    }
     /**
      * Where to redirect users after login.
      *
@@ -36,5 +40,9 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    protected function loggedOut($request)
+    {
+        return redirect('more-priv-plz');
     }
 }

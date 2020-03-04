@@ -5,7 +5,7 @@
 <section id="home" class="home-cover">
   <div class="cover_slider owl-carousel owl-theme">
     <div class="cover_item"
-      style="background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),url('template/img/IMG_8858.JPG');">
+      style="background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),url('template/img/IMG_8858.jpg');">
       <div class="slider_content">
         <div class="slider-content-inner">
           <div class="container">
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="cover_item"
-      style="background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),url('template/img/IMG_8879.JPG');">
+      style="background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),url('template/img/IMG_8879.jpg');">
       <div class="slider_content">
         <div class="slider-content-inner">
           <div class="container">
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="cover_item"
-      style="background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),url('template/img/IMG_0942.JPG');">
+      style="background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),url('template/img/IMG_0942.jpg');">
       <div class="slider_content">
         <div class="slider-content-inner">
           <div class="container">
@@ -140,7 +140,7 @@
 <!--event info end -->
 
 <!--event countdown -->
-<section class="bg-img pt70 pb70" style="background-image: url('template/img/IMG_9758.JPG');">
+<section class="bg-img pt70 pb70 " style="background-image: url('template/img/IMG_9758.jpg');">
   <div class="overlay_dark"></div>
   <div class="container">
     <div class="row justify-content-center">
@@ -226,28 +226,28 @@
     <div class="col-md-3 col-sm-6">
       <div class="speaker_box">
         <div class="speaker_img">
-          <img src="template/img/IMG_9969.JPG">
+          <img src="template/img/IMG_9969.jpg">
         </div>
       </div>
     </div>
     <div class="col-md-3 col-sm-6">
       <div class="speaker_box">
         <div class="speaker_img">
-          <img src="template/img/IMG_9882.JPG">
+          <img src="template/img/IMG_9882.jpg">
         </div>
       </div>
     </div>
     <div class="col-md-3 col-sm-6">
       <div class="speaker_box">
         <div class="speaker_img">
-          <img src="template/img/IMG_9942.JPG">
+          <img src="template/img/IMG_9942.jpg">
         </div>
       </div>
     </div>
     <div class="col-md-3 col-sm-6">
       <div class="speaker_box">
         <div class="speaker_img">
-          <img src="template/img/IMG_9962.JPG">
+          <img src="template/img/IMG_9962.jpg">
         </div>
       </div>
     </div>
@@ -411,7 +411,7 @@
 
 <!--get tickets section -->
 <section class="bg-img pt100 pb100"
-  style="background-image: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)), url('template/img/IMG_9785.JPG');">
+  style="background-image: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)), url('template/img/IMG_9785.jpg');">
 
   <div class="container">
     <div class="section_title mb30">
