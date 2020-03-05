@@ -1,5 +1,0 @@
-*.sqlite
-*.sqlite-journal
-public/image/invoice/
-public/image/temp/
-public/image/upload/

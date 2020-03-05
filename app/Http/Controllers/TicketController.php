@@ -31,7 +31,7 @@ class TicketController extends Controller
             $book->bid = Str::random(10);
             $book->jumlah = $request->jumlah;
             $request->session()->put('book', $book);
-            return view('pages/ticket/form', ['book' => $book]);
+            return view('pages/ticket/form', compact('book'));
          } else {
             return redirect('/ticket');
          }
@@ -89,9 +89,6 @@ class TicketController extends Controller
       SendBookTimeNotificationMail::dispatch($book)->onQueue('medium')->delay(now()->addHours(12));
       SendBookExpiredMail::dispatch($book)->onQueue('medium')->delay(now()->addDay());
 
-      return view('pages/ticket/success', [
-         'book' => $book,
-         'peserta' => $peserta
-      ]);
+      return view('pages/ticket/success', compact('book', 'peserta'));
    }
 }

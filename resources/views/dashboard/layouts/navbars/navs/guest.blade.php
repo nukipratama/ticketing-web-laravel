@@ -1,7 +1,7 @@
 <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
     <div class="container px-4">
-        <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/white.png" />
+        <a class="navbar-brand" href="/more-priv-plz">
+            Ticket<strong>App</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,8 +12,8 @@
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a href="{{ route('home') }}">
-                            <img src="{{ asset('argon') }}/img/brand/blue.png">
+                        <a href="/more-priv-plz">
+                            Ticket<strong>App</strong>
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
