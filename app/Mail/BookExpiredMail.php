@@ -29,7 +29,7 @@ class BookExpiredMail extends Mailable
     public function build()
     {
         return $this->from('ticketapp@nukipratama.tech', 'TicketApp')
-            ->subject('TicketApp Payment Expired - OrderID: ' . $this->book->bid)
+            ->subject('Payment Expired - OrderID: ' . $this->book->bid)
             ->markdown('mail.book.invoiceExpired');
     }
 }

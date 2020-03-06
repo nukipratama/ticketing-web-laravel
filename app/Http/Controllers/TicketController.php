@@ -89,6 +89,6 @@ class TicketController extends Controller
       SendBookTimeNotificationMail::dispatch($book)->onQueue('medium')->delay(now()->addHours(12));
       SendBookExpiredMail::dispatch($book)->onQueue('medium')->delay(now()->addDay());
 
-      return view('pages/ticket/success', compact('book', 'peserta'));
+      return view('pages/ticket/success', compact('book'));
    }
 }

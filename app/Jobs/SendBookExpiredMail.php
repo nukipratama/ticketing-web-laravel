@@ -35,9 +35,9 @@ class SendBookExpiredMail implements ShouldQueue
     public function handle()
     {
         $book = $this->details;
-        Log::info('Mengirim notifikasi expired ke ' . $book->email);
         $book_status = Book::firstWhere('bid', $book->bid);
         if ($book_status->status === 0) {
+            Log::info('Mengirim reminder expired ke ' . $book->email);
             $email = new BookExpiredMail($book);
             Mail::to($book->email)->send($email);
             $ticket = Ticket::where('jenis', $book->jenis)
@@ -46,9 +46,6 @@ class SendBookExpiredMail implements ShouldQueue
                 ->first();
             $ticket->kuota = $ticket->kuota + $book_status->jumlah;
             $ticket->save();
-            Log::info('Notifikasi expired terkirim ke ' . $book->email);
-        } else {
-            Log::info('Status booking ' . $book->email . ' telah berubah');
         }
     }
     public function failed($exception)

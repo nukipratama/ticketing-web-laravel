@@ -36,7 +36,6 @@ class SendBookSuccessMail implements ShouldQueue
         $email = new BookSuccessMail($book);
         Log::info('Mengirim tagihan ke ' . $book->email);
         Mail::to($book->email)->send($email);
-        Log::info('Tagihan terkirim ke ' . $book->email);
     }
     public function failed($exception)
     {

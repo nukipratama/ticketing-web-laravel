@@ -1,12 +1,13 @@
 @component('mail::message')
 Hello **{{$book->email}}**, {{-- use double space for line break --}}
-Terima Kasih telah melakukan pemesanan di TicketApp!
+Thank you for booking your ticket with TicketApp!
 
-Klik tombol berikut untuk melanjutkan ke pembayaran
+Please click button below to continue to payment
 @component('mail::button', ['url' => config('app.url').'/book?bid='.$book->bid, 'color' => 'primary'])
-Lanjutkan ke Pembayaran
+Continue to Payment
 @endcomponent
-Batas akhir pembayaran adalah **{{$book->deadline}}** , silahkan melakukan pembayaran sebelum waktu pembayaran habis.
+Payment deadline is at {{$book->deadline}} , please upload your payment proof invoice before deadline.
+Payment upload form can't be accessed after {{$book->deadline}} and the booked ticket will be released.
 Sincerely,
 TicketApp.
 @endcomponent

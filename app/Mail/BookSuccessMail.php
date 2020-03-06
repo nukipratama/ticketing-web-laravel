@@ -29,7 +29,7 @@ class BookSuccessMail extends Mailable
     public function build()
     {
         return $this->from('ticketapp@nukipratama.tech', 'TicketApp')
-            ->subject('TicketApp Payment Confirmation - OrderID: ' . $this->book->bid)
+            ->subject('Invoice - OrderID: ' . $this->book->bid)
             ->markdown('mail.book.invoice');
     }
 }

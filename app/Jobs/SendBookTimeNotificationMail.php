@@ -35,13 +35,10 @@ class SendBookTimeNotificationMail implements ShouldQueue
     {
         $book = $this->details;
         $book_status = Book::firstWhere('bid', $book->bid);
-        Log::info('Mengirim notifikasi tagihan ke ' . $book->email);
         if ($book_status->status === 0) {
+            Log::info('Mengirim reminder ke ' . $book->email);
             $email = new BookTimeNotificationMail($book);
             Mail::to($book->email)->send($email);
-            Log::info('Notifikasi tagihan terkirim ke ' . $book->email);
-        } else {
-            Log::info('Status booking ' . $book->email . ' telah berubah');
         }
     }
     public function failed($exception)

@@ -1,7 +1,7 @@
 @component('mail::message')
 Hello **{{$book->email}}**, {{-- use double space for line break --}}
-Mohon maaf pembelian tiket anda tidak berhasil karena telah dibatalkan oleh admin. Silahkan kontak kami dalam 1x24 jam
-melalui email di -alamat email cs- untuk informasi lebih lanjut.
+We're really sorry to inform you that your registration has been declined by Administrator.
+Please contact us at cs@ticketapp if you have problem with registration.
 Sincerely,
 TicketApp.
 @endcomponent

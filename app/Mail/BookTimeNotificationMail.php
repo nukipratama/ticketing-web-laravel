@@ -29,7 +29,7 @@ class BookTimeNotificationMail extends Mailable
     public function build()
     {
         return $this->from('ticketapp@nukipratama.tech', 'TicketApp')
-            ->subject('TicketApp Payment Reminder - OrderID: ' . $this->book->bid)
+            ->subject('Payment Reminder - OrderID: ' . $this->book->bid)
             ->markdown('mail.book.invoiceTimeNotification');
     }
 }
