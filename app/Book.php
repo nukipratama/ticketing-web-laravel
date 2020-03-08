@@ -8,10 +8,12 @@ class Book extends Model
 {
     protected $fillable = [
         'bid',
-        'jenis',
-        'kategori',
-        'harga',
+        'ticket_id',
         'jumlah',
         'email'
     ];
+    public function tickets()
+    {
+        return $this->hasOne('App\Ticket', 'id', 'ticket_id');
+    }
 }

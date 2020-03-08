@@ -1,25 +1,15 @@
 @extends('dashboard.layouts.app')
 @section('title')
-Dashboard
+{{$title}}
 @endsection
 @section('content')
-@include('dashboard.layouts.headers.cards')
+@include('dashboard.users.partials.header',
+['title' => ($recent->hasPages() ? $title.'- Page '.$recent->currentPage() : $title),'description'=>__($description)])
 
-<div class="container-fluid mt--8 mb-5">
-
-    <div class="row mt-5">
-        <div class="col-xl-8 mb-5 mb-xl-0">
+<div class="container-fluid mt--7 mb-5">
+    <div class="row">
+        <div class="col-xl-12 mb-5 mb-xl-0">
             <div class="card shadow">
-                <div class="card-header border-0">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h3 class="mb-0">Recent Books</h3><small class="mb-0">Latest Booking Status</small>
-                        </div>
-                        <div class="col text-right">
-                            <a href="{{route('dashboard.recent')}}" class="btn btn-sm btn-primary">See all</a>
-                        </div>
-                    </div>
-                </div>
                 <div class="table-responsive">
                     <!-- Projects table -->
                     <table class="table align-items-center table-flush">
@@ -29,13 +19,14 @@ Dashboard
                                 <th scope="col">Book Email</th>
                                 <th scope="col">Kategori</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($recent as $item)
+                            @foreach ($recent as $key => $item)
                             <tr class="text-center">
                                 <th scope="row">
-                                    {{$item->id}}
+                                    {{$title === 'Recent Books' ? $item->id : $key + $recent->firstItem()}}
                                 </th>
                                 <td>
                                     {{$item->email}}
@@ -62,65 +53,36 @@ Dashboard
                                     @break
                                     @endswitch
                                 </td>
-
+                                <td>
+                                    Detail
+                                </td>
                             </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
-
-            </div>
-        </div>
-        <div class="col-xl-4">
-            <div class="card shadow">
                 <div class="card-header border-0">
                     <div class="row align-items-center">
-                        <div class="col">
-                            <h3 class="mb-0">Total Income</h3>
-                            <small class="mb-0">Total Income + Unique Price</small>
-                            <br>
-                            <strong class="mb-0">IDR {{number_format($income, 0, ',', '.')}}</strong>
+                        <div class="col text-right">
+                            @if ($recent->currentPage()!==1)
+                            <a href="{{$recent->url(1)}}" class="btn btn-sm btn-info">First</a>
+                            <a href="{{$recent->previousPageUrl()}}" class="btn btn-sm btn-info">Previous</a>
+                            @endif
+                            @if ($recent->currentPage()!==$recent->lastPage())
+                            <a href="{{$recent->nextPageUrl()}}" class="btn btn-sm btn-info">Next</a>
+                            @endif
+                            @if ($recent->hasMorePages())
+                            <a href="{{$recent->url($recent->lastPage())}}" class="btn btn-sm btn-info">Last</a>
+                            @endif
                         </div>
                     </div>
-                </div>
-                <div class="table-responsive">
-                    <!-- Projects table -->
-                    <table class="table align-items-center table-flush text-center">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Jenis</th>
-                                <th scope="col">Kategori</th>
-                                <th scope="col">Total</th>
-                                <th scope="col">Income</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($total as $item)
-                            <tr>
-                                <th scope="row">
-                                    {{$item->jenis}}
-                                </th>
-                                <td>
-                                    {{$item->kategori}}
-                                </td>
-                                <td>
-                                    {{$item->participant}}
-                                </td>
-                                <td>
-                                    <strong>IDR {{number_format($item->income, 0, ',', '.')}}</strong>
-                                </td>
-                            </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+
+{{-- </div> --}}
 @endsection
 
 @push('js')

@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use Illuminate\Support\Facades\Log;
-use App\Book;
 use App\Mail\BookTimeNotificationMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Mail;
@@ -34,7 +33,7 @@ class SendBookTimeNotificationMail implements ShouldQueue
     public function handle()
     {
         $book = $this->details;
-        $book_status = Book::firstWhere('bid', $book->bid);
+        $book_status = \App\Book::firstWhere('bid', $book->bid);
         if ($book_status->status === 0) {
             Log::info('Mengirim reminder ke ' . $book->email);
             $email = new BookTimeNotificationMail($book);

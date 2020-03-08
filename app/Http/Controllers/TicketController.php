@@ -29,6 +29,7 @@ class TicketController extends Controller
          $book = (object) $book->toArray();
          if ($book->kuota >= $request->jumlah) {
             $book->bid = Str::random(10);
+            $book->ticket_id = $book->id;
             $book->jumlah = $request->jumlah;
             $request->session()->put('book', $book);
             return view('pages/ticket/form', compact('book'));

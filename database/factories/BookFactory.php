@@ -9,10 +9,8 @@ use Illuminate\Support\Str;
 $factory->define(Book::class, function (Faker $faker) {
     return [
         'bid' => Str::random(10),
-        'jenis' => 'Reguler',
-        'kategori' => '21K',
-        'harga' => 500000,
-        'jumlah' => 1,
+        'ticket_id' => $faker->numberBetween(1, 3),
+        'jumlah' => $faker->numberBetween(1, 5),
         'invoice' => null,
         'status' => $faker->numberBetween(0, 4),
         'email' => $faker->email,

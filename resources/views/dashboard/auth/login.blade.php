@@ -1,5 +1,7 @@
 @extends('dashboard.layouts.app', ['class' => 'bg-default'])
-
+@section('title')
+m0r3-pr1v-plz
+@endsection
 @section('content')
 @include('dashboard.layouts.headers.guest')
 
@@ -14,7 +16,7 @@
                             Prove me how <strong>strong</strong> are <strong>you</strong>
                         </small>
                     </div>
-                    <form role="form" method="POST" action="{{ route('login') }}">
+                    <form role="form" method="POST" action="{{ route('login-post') }}">
                         @csrf
 
                         <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3">
@@ -59,11 +61,6 @@
                         <small>{{ __('Forgot password?') }}</small>
                     </a>
                     @endif
-                </div>
-                <div class="col-6 text-right">
-                    {{-- <a href="{{ route('register') }}" class="text-light"> --}}
-                    <small>{{ __('Create new account') }}</small>
-                    </a>
                 </div>
             </div>
         </div>

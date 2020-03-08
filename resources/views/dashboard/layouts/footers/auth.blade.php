@@ -1,3 +1,3 @@
 <footer class="footer">
-    @include('dashboard.layouts.footers.nav')
+    {{-- @include('dashboard.layouts.footers.nav') --}}
 </footer>

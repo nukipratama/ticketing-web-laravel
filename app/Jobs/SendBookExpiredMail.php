@@ -4,8 +4,6 @@ namespace App\Jobs;
 
 use Illuminate\Support\Facades\Log;
 use App\Mail\BookExpiredMail;
-use App\Book;
-use App\Ticket;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -35,15 +33,12 @@ class SendBookExpiredMail implements ShouldQueue
     public function handle()
     {
         $book = $this->details;
-        $book_status = Book::firstWhere('bid', $book->bid);
+        $book_status = \App\Book::firstWhere('bid', $book->bid);
         if ($book_status->status === 0) {
             Log::info('Mengirim reminder expired ke ' . $book->email);
             $email = new BookExpiredMail($book);
             Mail::to($book->email)->send($email);
-            $ticket = Ticket::where('jenis', $book->jenis)
-                ->where('kategori', $book->kategori)
-                ->where('harga', $book->harga)
-                ->first();
+            $ticket = \App\Ticket::where('id', $book->ticket_id)->first();
             $ticket->kuota = $ticket->kuota + $book_status->jumlah;
             $ticket->save();
         }
