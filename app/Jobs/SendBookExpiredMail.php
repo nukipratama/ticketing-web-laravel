@@ -40,6 +40,8 @@ class SendBookExpiredMail implements ShouldQueue
             Mail::to($book->email)->send($email);
             $ticket = \App\Ticket::where('id', $book->ticket_id)->first();
             $ticket->kuota = $ticket->kuota + $book_status->jumlah;
+            $book_status->status = 3;
+            $book_status->save();
             $ticket->save();
         }
     }

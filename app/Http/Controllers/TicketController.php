@@ -87,8 +87,10 @@ class TicketController extends Controller
 
       Log::info('Menambahkan notifikasi tagihan ' . $book->email . ' ke antrian..');
       SendBookSuccessMail::dispatch($book)->onQueue('high');
-      SendBookTimeNotificationMail::dispatch($book)->onQueue('medium')->delay(now()->addHours(12));
-      SendBookExpiredMail::dispatch($book)->onQueue('medium')->delay(now()->addDay());
+      // ->delay(now()->addHours(12))
+      // ->delay(now()->addDay())
+      SendBookTimeNotificationMail::dispatch($book)->onQueue('medium');
+      SendBookExpiredMail::dispatch($book)->onQueue('medium');
 
       return view('pages/ticket/success', compact('book'));
    }
