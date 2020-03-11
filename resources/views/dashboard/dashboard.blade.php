@@ -46,7 +46,7 @@ Dashboard
                                 <td>
                                     @switch($item->status)
                                     @case('booked')
-                                    @if (\Carbon\Carbon::create($book->expired)->isPast())
+                                    @if (\Carbon\Carbon::create($item->expired)->isPast())
                                     <span class="badge badge-default">book expired</span>
                                     @else
                                     <span class="badge badge-warning">waiting payment</span>

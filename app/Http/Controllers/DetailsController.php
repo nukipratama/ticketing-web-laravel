@@ -58,7 +58,13 @@ class DetailsController extends Controller
         $book->status = 'accepted';
         $book->save();
         SendTicketMail::dispatch($book)->onQueue('high');
+        return back();
     }
     public function bookDecline(Request $request)
-    { }
+    {
+        $book = \App\Book::where('bid', $request->id)->first();
+        $book->status = 'declined';
+        $book->save();
+        return back();
+    }
 }
