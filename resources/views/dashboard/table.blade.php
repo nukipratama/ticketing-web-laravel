@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 @include('dashboard.users.partials.header',
-['title' => ($recent->hasPages() ? $title.'- Page '.$recent->currentPage() : $title),'description'=>__($description)])
+['title' => ($data->hasPages() ? $title.'- Page '.$data->currentPage() : $title),'description'=>__($description)])
 
 <div class="container-fluid mt--7 mb-5">
     <div class="row">
@@ -23,10 +23,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($recent as $key => $item)
+                            @foreach ($data as $key => $item)
                             <tr class="text-center">
                                 <th scope="row">
-                                    {{$title === 'Recent Books' ? $item->id : $key + $recent->firstItem()}}
+                                    {{$title === 'Recent Books' ? $item->id : $key + $data->firstItem()}}
                                 </th>
                                 <td>
                                     {{$item->email}}
@@ -36,25 +36,29 @@
                                 </td>
                                 <td>
                                     @switch($item->status)
-                                    @case(0)
+                                    @case('booked')
+                                    @if (\Carbon\Carbon::create($item->expired)->isPast())
+                                    <span class="badge badge-default">book expired</span>
+                                    @else
                                     <span class="badge badge-warning">waiting payment</span>
+                                    @endif
                                     @break
-                                    @case(1)
+                                    @case('uploaded')
                                     <span class="badge badge-info">waiting confirmation</span>
                                     @break
-                                    @case(2)
+                                    @case('accepted')
                                     <span class="badge badge-success">book success</span>
                                     @break
-                                    @case(3)
-                                    <span class="badge badge-default">book expired</span>
+                                    @case('expired')
                                     @break
-                                    @case(4)
+                                    @case('declined')
                                     <span class="badge badge-default">book declined</span>
                                     @break
                                     @endswitch
                                 </td>
                                 <td>
-                                    <a href=""><i class="fas fa-search"></i> Detail</a>
+                                    <a href="{{route('details.index',['id'=>$item->id])}}"><i class="fas fa-search"></i>
+                                        Detail</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -64,15 +68,15 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col text-right">
-                            @if ($recent->currentPage()!==1)
-                            <a href="{{$recent->url(1)}}" class="btn btn-sm btn-info">First</a>
-                            <a href="{{$recent->previousPageUrl()}}" class="btn btn-sm btn-info">Previous</a>
+                            @if ($data->currentPage()!==1)
+                            <a href="{{$data->url(1)}}" class="btn btn-sm btn-info">First</a>
+                            <a href="{{$data->previousPageUrl()}}" class="btn btn-sm btn-info">Previous</a>
                             @endif
-                            @if ($recent->currentPage()!==$recent->lastPage())
-                            <a href="{{$recent->nextPageUrl()}}" class="btn btn-sm btn-info">Next</a>
+                            @if ($data->currentPage()!==$data->lastPage())
+                            <a href="{{$data->nextPageUrl()}}" class="btn btn-sm btn-info">Next</a>
                             @endif
-                            @if ($recent->hasMorePages())
-                            <a href="{{$recent->url($recent->lastPage())}}" class="btn btn-sm btn-info">Last</a>
+                            @if ($data->hasMorePages())
+                            <a href="{{$data->url($data->lastPage())}}" class="btn btn-sm btn-info">Last</a>
                             @endif
                         </div>
                     </div>
@@ -84,8 +88,3 @@
 
 {{-- </div> --}}
 @endsection
-
-@push('js')
-<script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
-<script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
-@endpush

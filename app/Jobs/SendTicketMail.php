@@ -2,16 +2,17 @@
 
 namespace App\Jobs;
 
-use Illuminate\Support\Facades\Log;
-use App\Mail\BookExpiredMail;
-use Illuminate\Support\Facades\Mail;
+use App\Mail\TicketMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
-class SendBookExpiredMail implements ShouldQueue
+class SendTicketMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $details;
@@ -33,15 +34,10 @@ class SendBookExpiredMail implements ShouldQueue
     public function handle()
     {
         $book = $this->details;
-        $book_status = \App\Book::firstWhere('bid', $book->bid);
-        if ($book_status->status === 0) {
-            Log::info('Mengirim reminder expired ke ' . $book->email);
-            $email = new BookExpiredMail($book);
-            Mail::to($book->email)->send($email);
-            $ticket = \App\Ticket::where('id', $book->ticket_id)->first();
-            $ticket->kuota = $ticket->kuota + $book_status->jumlah;
-            $ticket->save();
-        }
+        $book->invoiceUrl = URL::signedRoute('invoice', ['id' => $book->bid]);
+        $email = new TicketMail($book);
+        Log::info('Mengirim tiket ke ' . $book->email);
+        Mail::to($book->email)->send($email);
     }
     public function failed($exception)
     {

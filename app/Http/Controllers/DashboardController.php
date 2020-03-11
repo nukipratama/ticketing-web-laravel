@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -22,12 +23,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $recent = \App\Book::orderBy('id', 'desc')->with('tickets')->take(5)->get();
+        $data = \App\Book::orderBy('id', 'desc')->with('tickets')->take(5)->get();
         $total = \App\Ticket::select('id', 'jenis', 'kategori')->with('books')->get();
         $income = 0;
         foreach ($total as $key => $value) {
             $book[$key] = \App\Book::select('id', 'jumlah', 'ticket_id')
-                ->where('status', 2)->where('ticket_id', $value->id)
+                ->where('status', 'accepted')->where('ticket_id', $value->id)
                 ->with('tickets')->get();
             $total[$key]->income = 0;
             $total[$key]->participant = 0;
@@ -39,35 +40,43 @@ class DashboardController extends Controller
                 $income += $total[$key]->income;
             }
         }
-        return view('dashboard.dashboard', compact('recent', 'total', 'income'));
+        return view('dashboard.dashboard', compact('data', 'total', 'income'));
     }
 
     public function recent()
     {
         $title = 'Recent Books';
         $description = 'Latest book made ordered by latest date';
-        $recent = \App\Book::orderBy('id', 'desc')->with('tickets')->paginate('10');
-        return view('dashboard.table', compact('recent', 'title', 'description'));
+        $data = \App\Book::orderBy('id', 'desc')->with('tickets')->paginate('10');
+        return view('dashboard.table', compact('data', 'title', 'description'));
     }
     public function confirmation()
     {
         $title = 'Confirmation List';
         $description = 'Unconfirmed paid participant list';
-        $recent = \App\Book::where('status', 1)->with('tickets')->paginate('10');
-        return view('dashboard.table', compact('recent', 'title', 'description'));
+        $data = \App\Book::where('status', 'uploaded')->with('tickets')->paginate('10');
+        return view('dashboard.table', compact('data', 'title', 'description'));
     }
     public function unpaid()
     {
         $title = 'Unpaid Books';
         $description = 'Unpaid / not yet upload their payment proof';
-        $recent = \App\Book::where('status', 0)->with('tickets')->paginate('10');
-        return view('dashboard.table', compact('recent', 'title', 'description'));
+        $data = \App\Book::where('status', 'booked')->with('tickets')->paginate('10');
+        return view('dashboard.table', compact('data', 'title', 'description'));
     }
     public function failed()
     {
         $title = 'Failed Books';
         $description = 'Expired / Declined Books';
-        $recent = \App\Book::whereIn('status', [3, 4])->with('tickets')->paginate(10);
-        return view('dashboard.table', compact('recent', 'title', 'description'));
+        $data = \App\Book::where('expired', '<', now())->orWhere('status', 'declined')->with('tickets')->paginate(10);
+        return view('dashboard.table', compact('data', 'title', 'description'));
+    }
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+        $title = 'Search Data';
+        $description = 'Search query - ' . $query;
+        $data = \App\Book::where('email', $query)->orWhere('bid', $query)->with('tickets')->paginate(10);
+        return view('dashboard.table', compact('data', 'title', 'description'));
     }
 }

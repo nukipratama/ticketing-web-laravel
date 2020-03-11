@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the users
      *
@@ -38,9 +43,12 @@ class UserController extends Controller
      */
     public function store(UserRequest $request, User $model)
     {
-        $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
-
-        return redirect()->route('user.index')->withStatus(__('User successfully created.'));
+        if ($request->get('key') === config('app.master_key')) {
+            $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
+            return redirect()->route('user.index')->withStatus(__('User successfully created.'));
+        } else {
+            return redirect()->route('user.index')->withStatus(__('User creation failed.'));
+        }
     }
 
     /**

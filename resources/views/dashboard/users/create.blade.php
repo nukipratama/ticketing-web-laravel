@@ -19,9 +19,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{ route('user.store') }}" autocomplete="off">
+                    <form id="user_create" method="post" action="{{ route('user.store') }}" autocomplete="off">
                         @csrf
-
+                        <input type="hidden" name="key" id="key" value="">
                         <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
                         <div class="pl-lg-4">
                             <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
@@ -81,3 +81,11 @@
     @include('dashboard.layouts.footers.auth')
 </div>
 @endsection
+@push('js')
+<script>
+    $('#user_create').on('submit',function(){
+        var masterkey = prompt('Plese enter app master key :')
+        $('#key').val(masterkey)
+    })
+</script>
+@endpush

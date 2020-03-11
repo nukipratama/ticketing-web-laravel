@@ -37,7 +37,7 @@
             <div class="text-center">
                <h5 class="text-dark">Total Invoice</h5>
                <p class="lead font-weight-bold text-dark">
-                  IDR {{number_format($book->tickets->harga+$book->id,0,',','.')}}
+                  IDR {{number_format(($book->tickets->harga*$book->jumlah)+$book->id,0,',','.')}}
                </p>
                <small>Please transfer to -BANK ACCOUNT- and upload payment proof before
                   <b>{{$book->countdownLabel}}</b></small>

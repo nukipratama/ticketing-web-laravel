@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'master_key' => env('APP_MASTER_KEY', null),
     /*
     |--------------------------------------------------------------------------
     | Application Name

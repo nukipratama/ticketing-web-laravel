@@ -22,7 +22,8 @@ class CreateBooksTable extends Migration
             $table->integer('jumlah');
             $table->string('email');
             $table->string('invoice')->nullable();
-            $table->integer('status')->default(0);
+            $table->string('status')->default('booked');
+            $table->dateTime('expired')->default(now()->addDay());
             $table->timestamps();
         });
     }

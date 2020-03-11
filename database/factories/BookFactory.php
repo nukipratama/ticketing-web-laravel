@@ -12,8 +12,9 @@ $factory->define(Book::class, function (Faker $faker) {
         'ticket_id' => $faker->numberBetween(1, 3),
         'jumlah' => $faker->numberBetween(1, 5),
         'invoice' => null,
-        'status' => $faker->numberBetween(0, 4),
+        'status' => $faker->randomElement(['booked', 'uploaded', 'accepted', 'declined']),
         'email' => $faker->email,
+        'expired' => now()->addDay(),
         'created_at' => now(),
         'updated_at' => now(),
     ];

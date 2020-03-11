@@ -32,7 +32,7 @@ Dashboard
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($recent as $item)
+                            @foreach ($data as $item)
                             <tr class="text-center">
                                 <th scope="row">
                                     {{$item->id}}
@@ -45,19 +45,22 @@ Dashboard
                                 </td>
                                 <td>
                                     @switch($item->status)
-                                    @case(0)
+                                    @case('booked')
+                                    @if (\Carbon\Carbon::create($book->expired)->isPast())
+                                    <span class="badge badge-default">book expired</span>
+                                    @else
                                     <span class="badge badge-warning">waiting payment</span>
+                                    @endif
                                     @break
-                                    @case(1)
+                                    @case('uploaded')
                                     <span class="badge badge-info">waiting confirmation</span>
                                     @break
-                                    @case(2)
+                                    @case('accepted')
                                     <span class="badge badge-success">book success</span>
                                     @break
-                                    @case(3)
-                                    <span class="badge badge-default">book expired</span>
+                                    @case('expired')
                                     @break
-                                    @case(4)
+                                    @case('declined')
                                     <span class="badge badge-default">book declined</span>
                                     @break
                                     @endswitch

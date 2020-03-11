@@ -33,7 +33,7 @@
          <div class="container">
             <div class="row">
                @foreach ($book->participants as $item)
-               <div class="col-md-6">
+               <div class="col-md-4 mt-3">
                   <div class="card">
                      <h5 class="card-header">{{$item->name}}</h5>
                      <div class="card-body">
