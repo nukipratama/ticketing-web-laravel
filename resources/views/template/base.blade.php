@@ -17,6 +17,7 @@
     <link href="{{asset("template/css/font-awesome.min.css")}}" rel="stylesheet">
     <link href="{{asset("template/css/et-line.css")}}" rel="stylesheet">
     <link href="{{asset("template/css/ionicons.min.css")}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <!-- Carousel CSS -->
     <link href="{{asset("template/css/owl.carousel.min.css")}}" rel="stylesheet">
     <link href="{{asset("template/css/owl.theme.default.min.css")}}" rel="stylesheet">
@@ -210,6 +211,7 @@
     <script src="{{asset("template/js/jquery.countdown.min.js")}}"></script>
     <!-- WOW JS -->
     <script src="{{asset("template/js/wow.min.js")}}"></script>
+
     <!-- Custom js -->
     <script src="{{asset("template/js/main.js")}}"></script>
     @yield('custom-js')

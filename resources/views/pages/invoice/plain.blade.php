@@ -9,7 +9,7 @@
          <div class="col-12">
             <div class="inner_cover_content">
                <h3>
-                  Ticket - {{$book->bid}}
+                  {{$title}}
                </h3>
             </div>
          </div>
@@ -28,24 +28,9 @@
 <div class="container-fluid p-3">
    <div class="row justify-content-center my-2">
       <div class="col-md-12 my-2">
-         <h4 class="row m-0 p-0">Download Ticket</h4>
+         <h4 class="row m-0 p-0">Registration Status</h4>
          <hr>
-         <div class="container">
-            <div class="row">
-               @foreach ($book->participants as $item)
-               <div class="col-md-6">
-                  <div class="card">
-                     <h5 class="card-header">{{$item->name}}</h5>
-                     <div class="card-body">
-                        <h5 class="card-title">{{$item->email}}</h5>
-                        <p class="card-text">{{$item->address}}</p>
-                        <a href="#" class="btn btn-primary">Download</a>
-                     </div>
-                  </div>
-               </div>
-               @endforeach
-            </div>
-         </div>
+         <p class="lead">{!!$description!!}</p>
       </div>
    </div>
 </div>

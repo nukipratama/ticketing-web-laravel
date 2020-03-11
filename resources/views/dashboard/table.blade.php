@@ -54,7 +54,7 @@
                                     @endswitch
                                 </td>
                                 <td>
-                                    Detail
+                                    <a href=""><i class="fas fa-search"></i> Detail</a>
                                 </td>
                             </tr>
                             @endforeach

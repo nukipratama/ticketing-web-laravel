@@ -3,7 +3,7 @@ Hello **{{$book->email}}**, {{-- use double space for line break --}}
 Thank you for booking your ticket with TicketApp!
 
 Please click button below to continue to payment
-@component('mail::button', ['url' => config('app.url').'/book?bid='.$book->bid, 'color' => 'primary'])
+@component('mail::button', ['url' => $book->invoiceUrl, 'color' => 'primary'])
 Continue to Payment
 @endcomponent
 Payment deadline is at {{$book->deadline}} , please upload your payment proof invoice before deadline.

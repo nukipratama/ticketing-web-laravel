@@ -16,4 +16,8 @@ class Book extends Model
     {
         return $this->hasOne('App\Ticket', 'id', 'ticket_id');
     }
+    public function participants()
+    {
+        return $this->hasMany('App\Participant', 'bid', 'bid');
+    }
 }

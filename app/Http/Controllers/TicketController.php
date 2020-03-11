@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use App\Ticket;
 use App\Book;
@@ -55,7 +56,8 @@ class TicketController extends Controller
          $uid = Str::random(10);
          $file = $request->file('imgPeserta')[$i];
          $file_mod_name = $uid . '.' . $file->getClientOriginalExtension();
-         $file->move('image/upload', $file_mod_name);
+         $file_path = 'image/upload';
+         $file->move($file_path, $file_mod_name);
          $peserta[$i] = (object) [
             "uid" => $uid,
             "bid" => $book->bid,
@@ -69,7 +71,7 @@ class TicketController extends Controller
             "identity" => $validated->idPeserta[$i],
             "community" => $validated->communityPeserta[$i],
             "size" => $validated->sizePeserta[$i],
-            "img" => 'image/temp/' . $file_mod_name,
+            "img" => $file_path . $file_mod_name,
             "medical" => $validated->medicalPeserta[$i]
          ];
       }
@@ -80,17 +82,15 @@ class TicketController extends Controller
    public function store($book, $peserta)
    {
       $book->deadline = Carbon::parse(now()->addDay(), 'Asia/Jakarta');
+      $book->invoiceUrl = URL::signedRoute('invoice', ['id' => $book->bid]);
       Book::create(get_object_vars($book));
       foreach ($peserta as $participant) {
          Participant::create(get_object_vars($participant));
       }
-
       Log::info('Menambahkan notifikasi tagihan ' . $book->email . ' ke antrian..');
       SendBookSuccessMail::dispatch($book)->onQueue('high');
-      // ->delay(now()->addHours(12))
-      // ->delay(now()->addDay())
-      SendBookTimeNotificationMail::dispatch($book)->onQueue('medium');
-      SendBookExpiredMail::dispatch($book)->onQueue('medium');
+      SendBookTimeNotificationMail::dispatch($book)->onQueue('medium')->delay(now()->addHours(12));
+      SendBookExpiredMail::dispatch($book)->onQueue('medium')->delay(now()->addDay());
 
       return view('pages/ticket/success', compact('book'));
    }

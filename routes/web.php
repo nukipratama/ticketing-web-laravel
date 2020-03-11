@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/', function () {
     return view('pages/landing');
 });
@@ -17,8 +19,10 @@ Route::get('/', function () {
 Route::get('ticket', 'TicketController@index');
 Route::post('ticket/check', 'TicketController@check');
 Route::get('ticket/{id}', 'TicketController@create');
+//invoice
+Route::get('invoice/{id}', 'InvoiceController@index')->name('invoice');
+Route::put('invoice/{id}', 'InvoiceController@store')->name('uploadInvoice');
 //dashboard
-// Auth::routes(['register' => false]);
 Route::get('more-priv-plz', 'DashboardController@index')->name('home');
 Route::get('isi-untuk-masuk', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('masuk-dashboard', 'Auth\LoginController@login')->name('login-post');
