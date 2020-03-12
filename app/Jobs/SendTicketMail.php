@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class SendTicketMail implements ShouldQueue
 {
@@ -33,6 +34,7 @@ class SendTicketMail implements ShouldQueue
     public function handle()
     {
         $book = $this->details;
+        $book['invoiceUrl'] = URL::signedRoute('invoice', ['id' => $book->bid]);
         $email = new TicketMail($book);
         Log::info('Mengirim tiket ke ' . $book->email);
         Mail::to($book->email)->send($email);

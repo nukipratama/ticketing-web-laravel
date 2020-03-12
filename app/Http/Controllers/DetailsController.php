@@ -57,12 +57,10 @@ class DetailsController extends Controller
     }
     public function bookAccept(Request $request)
     {
-        $book = \App\Book::where('bid', $request->id)->first();
-        $book->status = 'accepted';
-        $book->save();
-        $book->invoiceUrl = URL::signedRoute('invoice', ['id' => $book->bid]);
-        // return $book;
-        SendTicketMail::dispatch($book)->onQueue('high');
+        $data = \App\Book::where('bid', $request->id)->first();
+        $data->status = 'accepted';
+        $data->save();
+        SendTicketMail::dispatch($data)->onQueue('high');
         return back();
     }
     public function bookDecline(Request $request)
