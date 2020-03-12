@@ -56,7 +56,7 @@ class TicketController extends Controller
          $uid = Str::random(10);
          $file = $request->file('imgPeserta')[$i];
          $file_mod_name = $uid . '.' . $file->getClientOriginalExtension();
-         $file_path = 'image/upload';
+         $file_path = 'image/upload/';
          $file->move($file_path, $file_mod_name);
          $peserta[$i] = (object) [
             "uid" => $uid,
@@ -81,7 +81,7 @@ class TicketController extends Controller
 
    public function store($book, $peserta)
    {
-      $book->deadline = Carbon::parse(now()->addDay(), 'Asia/Jakarta');
+      $book->expired = Carbon::parse(now()->addDay());
       $book->invoiceUrl = URL::signedRoute('invoice', ['id' => $book->bid]);
       Book::create(get_object_vars($book));
       foreach ($peserta as $participant) {

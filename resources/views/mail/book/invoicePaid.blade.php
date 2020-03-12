@@ -6,7 +6,7 @@ Your ticket is ready! Click the button below to access your ticket
 Access Ticket
 @endcomponent
 You can access your ticket too by accessing
-<a href="{{config('app.url').'/book?bid='.$book->bid}}">{{config('app.url').'/book?bid='.$book->bid}}</a>
+<a href="{{$book->invoiceUrl}}">{{$book->invoiceUrl}}</a>
 <br>
 Please save this e-mail or the ticket link.
 Sincerely,

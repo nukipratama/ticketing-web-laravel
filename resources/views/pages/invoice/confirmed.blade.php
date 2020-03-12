@@ -30,7 +30,7 @@
       <div class="col-md-12 my-2">
          <h4 class="row m-0 p-0">Download Ticket</h4>
          <hr>
-         <div class="container">
+         <div class="container-fluid">
             <div class="row">
                @foreach ($book->participants as $item)
                <div class="col-md-4 mt-3">

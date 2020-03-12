@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateBooksTable extends Migration
@@ -23,7 +24,7 @@ class CreateBooksTable extends Migration
             $table->string('email');
             $table->string('invoice')->nullable();
             $table->string('status')->default('booked');
-            $table->dateTime('expired')->default(now()->addDay());
+            $table->timestamp('expired');
             $table->timestamps();
         });
     }

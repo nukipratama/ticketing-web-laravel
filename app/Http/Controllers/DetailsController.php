@@ -25,6 +25,8 @@ class DetailsController extends Controller
     public function expiredUpdate(Request $request)
     {
         $book = \App\Book::where('bid', $request->id)->first();
+        $book->invoice = null;
+        $book->status = 'booked';
         switch ($request->add) {
             case 0:
                 $book->expired = now()->addHours(12);

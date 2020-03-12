@@ -10,7 +10,8 @@ class Book extends Model
         'bid',
         'ticket_id',
         'jumlah',
-        'email'
+        'email',
+        'expired'
     ];
     public function tickets()
     {

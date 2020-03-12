@@ -34,7 +34,7 @@
          <h4 class="row m-0 p-0">Invoice Details</h4>
          <hr>
          <div class="row m-0 p-0 justify-content-center">
-            <div class="text-center">
+            <div class="col-md-12 text-center">
                <h5 class="text-dark">Total Invoice</h5>
                <p class="lead font-weight-bold text-dark">
                   IDR {{number_format(($book->tickets->harga*$book->jumlah)+$book->id,0,',','.')}}
@@ -42,7 +42,7 @@
                <small>Please transfer to -BANK ACCOUNT- and upload payment proof before
                   <b>{{$book->countdownLabel}}</b></small>
             </div>
-            <div class="deadline m-2"></div>
+            <div class="col-md-12 deadline m-2"></div>
          </div>
       </div>
       <div class="col-md-6 my-2">
@@ -99,7 +99,7 @@
    var deadline = '{{$book->countdown}}'
    $(".deadline").countdown(deadline, function (event) {
             $(this).html(
-               event.strftime('<div>%H<span>Hours</span></div> <div>%M<span>Minutes</span></div> <div>%S<span>Seconds</span></div>')
+               event.strftime('<div class="m-1">%H<span>Hours</span></div> <div class="m-1">%M<span>Minutes</span></div> <div class="m-1">%S<span>Seconds</span></div>')
             );
       });
 </script>
