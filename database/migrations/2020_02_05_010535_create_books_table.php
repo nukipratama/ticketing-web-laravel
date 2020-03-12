@@ -24,7 +24,7 @@ class CreateBooksTable extends Migration
             $table->string('email');
             $table->string('invoice')->nullable();
             $table->string('status')->default('booked');
-            $table->timestamp('expired');
+            $table->timestamp('expired')->nullable();
             $table->timestamps();
         });
     }

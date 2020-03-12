@@ -34,7 +34,7 @@ class SendBookTimeNotificationMail implements ShouldQueue
     {
         $book = $this->details;
         $book_status = \App\Book::firstWhere('bid', $book->bid);
-        if ($book_status->status === 0) {
+        if ($book_status->status === 'booked') {
             Log::info('Mengirim reminder ke ' . $book->email);
             $email = new BookTimeNotificationMail($book);
             Mail::to($book->email)->send($email);

@@ -34,7 +34,7 @@ class SendBookExpiredMail implements ShouldQueue
     {
         $book = $this->details;
         $book_status = \App\Book::firstWhere('bid', $book->bid);
-        if ($book_status->status === 0) {
+        if ($book_status->status === 'booked') {
             Log::info('Mengirim reminder expired ke ' . $book->email);
             $email = new BookExpiredMail($book);
             Mail::to($book->email)->send($email);

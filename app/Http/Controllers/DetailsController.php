@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Jobs\SendTicketMail;
+use Illuminate\Support\Facades\URL;
 
 class DetailsController extends Controller
 {
@@ -59,6 +60,8 @@ class DetailsController extends Controller
         $book = \App\Book::where('bid', $request->id)->first();
         $book->status = 'accepted';
         $book->save();
+        $book->invoiceUrl = URL::signedRoute('invoice', ['id' => $book->bid]);
+        // return $book;
         SendTicketMail::dispatch($book)->onQueue('high');
         return back();
     }
